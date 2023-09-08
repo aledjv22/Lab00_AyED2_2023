@@ -23,5 +23,6 @@
 
 ## Ignore .o files ##
 *.o
+*.out
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
