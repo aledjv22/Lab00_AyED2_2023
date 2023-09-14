@@ -31,24 +31,68 @@ void print_board(char board[3][3])
 char get_winner(char board[3][3])
 {
     char winner = '-';
-    //
-    // TODO: COMPLETAR
-    //
+    bool aux = true;
+    
+    //get winner in column
+    for (unsigned int colum = 0; colum < 3; ++colum){
+        aux = true;
+        for (unsigned int row = 0; row < 2; ++row){
+            aux = aux && (board[row][colum] == board[row+1][colum]);
+
+            if (row == 1 && aux)
+                if (board[row+1][colum] != '-') winner = board[row+1][colum];
+        }
+        if(winner != '-') break;
+    }
+
+    //get winner in rows
+    for (unsigned int row = 0; row < 3; ++row){
+        aux = true;
+        for (unsigned int colum = 0; colum < 2; ++colum){
+            aux = aux && (board[row][colum] == board[row][colum+1]);
+
+            if (colum == 1 && aux)
+                if (board[row][colum+1] != '-') winner = board[row][colum+1];
+        }
+        if (winner != '-') break;
+    }
+
+    //get winner in diagonal
+    aux = true;
+    for (unsigned int rocol = 0; rocol < 2; ++rocol){
+        aux = aux && (board[rocol][rocol] == board[rocol+1][rocol+1]);
+
+        if (rocol == 1 && aux)
+            if (board[rocol][rocol] != '-') winner = board[rocol][rocol];
+    }
+
+    aux = true;
+    for (unsigned int row = 0, colum = 2; row < 2 && colum > 0; ++row,--colum){
+        aux = aux && (board[row][colum] == board[row+1][colum-1]);
+        
+        if (row == 1 && aux)
+            if (board[row][colum] != '-') winner = board[row][colum];
+    }
+
     return winner;
 }
 
 bool has_free_cell(char board[3][3])
 {
     bool free_cell=false;
-    //
-    // TODO: COMPLETAR
-    //
+
+    for (unsigned int row = 0; row < 3 && !free_cell; ++row){
+        for (unsigned int colum = 0; colum < 3 && !free_cell; ++colum){
+            free_cell = free_cell || (board[row][colum] == '-');
+        }
+    }
+
     return free_cell;
 }
 
 int main(void)
 {
-    printf("TicTacToe [InCoMpLeTo :'(]\n");
+    printf("TicTacToe: \n");
 
     char board[3][3] = {
         { '-', '-', '-' },
