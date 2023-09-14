@@ -21,8 +21,9 @@
 .history
 .ionide
 
-## Ignore .o files ##
-*.o
+## Ignore files ##
+bounds
+tateti
 *.out
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
