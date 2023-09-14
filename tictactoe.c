@@ -28,24 +28,10 @@ void print_board(char board[3][3])
     }
 }
 
-char get_winner(char board[3][3])
-{
-    char winner = '-';
-    bool aux = true;
-    
-    //get winner in column
-    for (unsigned int colum = 0; colum < 3; ++colum){
-        aux = true;
-        for (unsigned int row = 0; row < 2; ++row){
-            aux = aux && (board[row][colum] == board[row+1][colum]);
+// Function responsible for obtaining the winner of a row.
+char get_winner_in_row (char board[3][3], char winner){
+    bool aux;
 
-            if (row == 1 && aux)
-                if (board[row+1][colum] != '-') winner = board[row+1][colum];
-        }
-        if(winner != '-') break;
-    }
-
-    //get winner in rows
     for (unsigned int row = 0; row < 3; ++row){
         aux = true;
         for (unsigned int colum = 0; colum < 2; ++colum){
@@ -57,8 +43,31 @@ char get_winner(char board[3][3])
         if (winner != '-') break;
     }
 
-    //get winner in diagonal
-    aux = true;
+    return winner;
+}
+
+// Function responsible for obtaining the winner of a column.
+char get_winner_in_column (char board[3][3], char winner){
+    bool aux;
+
+    for (unsigned int colum = 0; colum < 3; ++colum){
+        aux = true;
+        for (unsigned int row = 0; row < 2; ++row){
+            aux = aux && (board[row][colum] == board[row+1][colum]);
+
+            if (row == 1 && aux)
+                if (board[row+1][colum] != '-') winner = board[row+1][colum];
+        }
+        if(winner != '-') break;
+    }
+
+    return winner;
+}
+
+// Function responsible for obtaining the winner of a diagonal.
+char get_winner_in_diagonal (char board[3][3], char winner){
+    bool aux = true;
+
     for (unsigned int rocol = 0; rocol < 2; ++rocol){
         aux = aux && (board[rocol][rocol] == board[rocol+1][rocol+1]);
 
@@ -77,9 +86,23 @@ char get_winner(char board[3][3])
     return winner;
 }
 
+// Function responsible for giving the winner if there is.
+char get_winner(char board[3][3])
+{
+    char winner = '-';
+
+    // Obtaining the winner in any of the possible cases.
+    winner = get_winner_in_row(board, winner);
+    winner = get_winner_in_column(board, winner);
+    winner = get_winner_in_diagonal(board, winner);
+
+    return winner;
+}
+
+// Function responsible for knowing if there is a free cell.
 bool has_free_cell(char board[3][3])
 {
-    bool free_cell=false;
+    bool free_cell = false;
 
     for (unsigned int row = 0; row < 3 && !free_cell; ++row){
         for (unsigned int colum = 0; colum < 3 && !free_cell; ++colum){
