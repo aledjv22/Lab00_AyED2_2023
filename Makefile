@@ -2,19 +2,19 @@
 
 CFLAGS = -Wall -Wextra -pedantic -std=c99
 
-all: tateti bounds
+all: tictactoe bounds
 
-tateti: tictactoe.c
-	gcc $(CFLAGS) tictactoe.c -o tateti
+tictactoe: tictactoe.c
+	gcc $(CFLAGS) tictactoe.c -o tictactoe
 
 bounds: bounds.c
 	gcc $(CFLAGS) bounds.c -o bounds
 
-run_tictactoe: tateti
-	./tateti
+run_tictactoe: tictactoe
+	./tictactoe
 
 run_bounds: bounds
 	./bounds
 
 clean:
-	rm -f tateti bounds
+	rm -f tictactoe bounds
